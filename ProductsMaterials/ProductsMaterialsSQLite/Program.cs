@@ -66,7 +66,7 @@ namespace ProductsMaterialsSQLite
 
         private static void InputProduct()
         {
-            Console.WriteLine("Продукт. Через пробел: ID, ShotName, FullName, Description, Quantity, Tolerance. Если Id меньше равен нуля - добавление.");
+            Console.WriteLine("Продукт. Через пробел: ID, ShotName, FullName, Description, Quantity. Если Id меньше равен нуля - добавление.");
             string[] input = Console.ReadLine().Split(" /\\;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             int id = -1;
             if (int.TryParse(input[0], out int _id))
@@ -74,7 +74,7 @@ namespace ProductsMaterialsSQLite
             if (id < 1)
                 using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
                 {
-                    pmContext.Products.Add(new ProductDB() { ShortName = input[1], FullName = input[2], Description = input[3], Quantity = int.Parse(input[4]), Tolerance = int.Parse(input[4]), Timestamp = DateTime.UtcNow });
+                    pmContext.Products.Add(new ProductDB() { ShortName = input[1], FullName = input[2], Description = input[3], Quantity = int.Parse(input[4]), Tolerance = 10 });
                     pmContext.SaveChanges();
                 }
             else
@@ -100,7 +100,7 @@ namespace ProductsMaterialsSQLite
             if (id < 1)
                 using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
                 {
-                    pmContext.Materials.Add(new MaterialDB() { ShortName = input[1], FullName = input[2], Description = input[3], Timestamp = DateTime.UtcNow });
+                    pmContext.Materials.Add(new MaterialDB() { ShortName = input[1], FullName = input[2], Description = input[3] });
                     pmContext.SaveChanges();
                 }
             else
@@ -122,7 +122,7 @@ namespace ProductsMaterialsSQLite
                 .Select(int.Parse).ToArray();
             using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
             {
-                pmContext.MaterialsInProducts.Add(new MaterialsInProductsDB() { ProductID = input[0], MaterialID = input[1], Quantity = input[2], Timestamp = DateTime.UtcNow });
+                pmContext.MaterialsInProducts.Add(new MaterialsInProductsDB() { ProductID = input[0], MaterialID = input[1], Quantity = input[2] });
                 pmContext.SaveChanges();
             }
         }
