@@ -16,20 +16,8 @@ namespace ProductsMaterialsSQLite
 
         /// <summary>Короткое имя</summary>
         /// <remarks>Задаётся обязательно и должно быть уникальным для таблицы</remarks>
-        [Required]
-        [Column("ShortName")]
-        public string ShortName { get; set; }
-
-        /// <summary>Полное имя</summary>
-        /// <remarks>Задаётся обязательно и должно быть уникальным для таблицы</remarks>
-        [Required]
-        [Column("FullName")]
-        public string FullName { get; set; }
-
-        /// <summary>Описание</summary>
-        /// <remarks>Задавать не обязательно</remarks>
-        [Column("Description")]
-        public string Description { get; set; }
+        [Column("Type")]
+        public int Type { get; set; }
 
         /// <summary>Количество</summary>
         /// <remarks>Задаётся обязательно и должно быть больше нуля</remarks>
@@ -47,7 +35,7 @@ namespace ProductsMaterialsSQLite
         [Column("Timestamp")]
         public DateTime? Timestamp { get; set; }
 
-        public override string ToString() => $"Продукт: {ID}, \"{ShortName}\", \"{FullName}\", \"{Description}\", {Quantity}, {Tolerance}, \"{Timestamp}\"";
+        public override string ToString() => $"Продукт: {ID}, {Type}, {Quantity}, {Tolerance}, \"{Timestamp}\"";
 
     }
 }

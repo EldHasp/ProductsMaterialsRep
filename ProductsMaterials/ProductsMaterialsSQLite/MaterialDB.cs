@@ -17,25 +17,9 @@ namespace ProductsMaterialsSQLite
         /// <summary>Короткое имя</summary>
         /// <remarks>Задаётся обязательно и должно быть уникальным для таблицы</remarks>
         [Required]
-        [Column("ShortName")]
-        public string ShortName { get; set; }
+        [Column("Name")]
+        public string Name { get; set; }
 
-        /// <summary>Полное имя</summary>
-        /// <remarks>Задаётся обязательно и должно быть уникальным для таблицы</remarks>
-        [Required]
-        [Column("FullName")]
-        public string FullName { get; set; }
-
-        /// <summary>Описание</summary>
-        /// <remarks>Задавать не обязательно</remarks>
-        [Column("Description")]
-        public string Description { get; set; }
-
-        /// <summary>Время записи</summary>
-        /// <remarks>Задаётся базой при изменении строки</remarks>
-        [Column("Timestamp")]
-        public DateTime? Timestamp { get; set; }
-
-        public override string ToString() => $"Материал: {ID}, \"{ShortName}\", \"{FullName}\", \"{Description}\", \"{Timestamp}\"";
+        public override string ToString() => $"Материал: {ID}, \"{Name}\"";
     }
 }

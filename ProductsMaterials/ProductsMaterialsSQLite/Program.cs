@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ProductsMaterialsSQLite.DTO;
+using ProductsMaterialsSQLite.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -9,122 +12,101 @@ namespace ProductsMaterialsSQLite
 {
     class Program
     {
+        static IReadOnlyCollection<ProductDTO> Products;
+        static IReadOnlyCollection<MaterialDTO> Materials;
+        static IReadOnlyCollection<IGrouping<ProductDTO, MaterialInProductDTO>> MatInProd;
         static void Main(string[] args)
         {
-            try
+
+            while (true)
             {
-                OutputProducts();
-                OutputMaterials();
-                OutputMaterialsInProducts();
+                Console.WriteLine(new string('*', 80));
+                Console.WriteLine(new string('*', 80));
+                Products = OutputProducts();
+                Console.WriteLine(new string('*', 80));
+                Materials = OutputMaterials();
+                Console.WriteLine(new string('*', 80));
+                MatInProd = OutputMaterialsInProducts();
+                Console.WriteLine(new string('*', 80));
 
-                InputProduct();
-                InputMaterial();
-                InputMaterialInProduct();
+            inp:
+                Console.WriteLine("0 - AddProduct,  2 - AddMaterialInProduct,  5 - AddProductAndMaterials, Empty - Cancel");
+                string input = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(input))
+                    break;
+                switch (input[0])
+                {
+                    case '0': AddProduct(); break;
+                    case '2': AddMaterialInProduct(); break;
+                    case '5': AddProductAndMaterials(); break;
+                    default:
+                        Console.WriteLine("Чё непонятного?!");
+                        goto inp;
+                }
+
             }
-            catch (DbEntityValidationException ex)
+        }
+
+        private static ProductsRepData ProductsrRep = new ProductsRepData();
+        private static MaterialsRepData MaterialsRep = new MaterialsRepData();
+        private static MaterialsInProductsRepData MaterialsInProductsRep = new MaterialsInProductsRepData();
+
+        private static IReadOnlyCollection<ProductDTO> OutputProducts()
+        {
+            var products = ProductsrRep.GetProducts();
+            Console.WriteLine(string.Join("\r\n", products));
+            return products;
+        }
+        private static IReadOnlyCollection<MaterialDTO> OutputMaterials()
+        {
+            var materials = MaterialsRep.GetMaterials();
+            Console.WriteLine(string.Join("\r\n", materials));
+            return materials;
+        }
+
+        private static IReadOnlyCollection<IGrouping<ProductDTO, MaterialInProductDTO>> OutputMaterialsInProducts()
+        {
+            var groups = Array.AsReadOnly(MaterialsInProductsRep.GetMaterialsInProducts().GroupBy(mp => Products.First(pr => pr.ID == mp.ProductID)).ToArray());
+            foreach (var group in groups)
             {
-                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                {
-                    Console.WriteLine("Object: " + validationError.Entry.Entity.ToString());
-                    foreach (DbValidationError err in validationError.ValidationErrors)
-                        Console.WriteLine(err.ErrorMessage);
-                }
+                Console.WriteLine(group.Key);
+                Console.WriteLine(string.Join("\r\n", group.Select(mp => "\t" + Materials.First(mt => mt.ID == mp.MaterialID) + " - " + mp.Quantity)));
             }
 
-            OutputProducts();
-            OutputMaterials();
-            OutputMaterialsInProducts();
+            return groups;
         }
 
-        private static void OutputProducts()
+        private static ProductDTO AddProduct()
         {
-            using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
-                try
-                {
-                    Console.WriteLine(string.Join("\r\n", pmContext.Products.ToList()));
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                    {
-                        Console.WriteLine("Object: " + validationError.Entry.Entity.ToString());
-                        foreach (DbValidationError err in validationError.ValidationErrors)
-                            Console.WriteLine(err.ErrorMessage);
-                    }
-                }
-        }
-        private static void OutputMaterials()
-        {
-            using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
-                Console.WriteLine(string.Join("\r\n", pmContext.Materials));
-        }
-        private static void OutputMaterialsInProducts()
-        {
-            using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
-                Console.WriteLine(string.Join("\r\n", pmContext.MaterialsInProducts));
+            Console.WriteLine("Добавление Продукта. Через '\\' или '/': Type, Quantity, Tolerance.");
+            int[] input = Console.ReadLine().Split("/\\;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            return ProductsrRep.AddProduct(new ProductDTO(input[0], input[1], input[2]));
         }
 
-        private static void InputProduct()
+        private static MaterialInProductDTO AddMaterialInProduct()
         {
-            Console.WriteLine("Продукт. Через пробел: ID, ShotName, FullName, Description, Quantity, Tolerance. Если Id меньше равен нуля - добавление.");
-            string[] input = Console.ReadLine().Split(" /\\;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            int id = -1;
-            if (int.TryParse(input[0], out int _id))
-                id = _id;
-            if (id < 1)
-                using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
-                {
-                    pmContext.Products.Add(new ProductDB() { ShortName = input[1], FullName = input[2], Description = input[3], Quantity = int.Parse(input[4]), Tolerance = int.Parse(input[4]), Timestamp = DateTime.UtcNow });
-                    pmContext.SaveChanges();
-                }
-            else
-                using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
-                {
-                    ProductDB product = pmContext.Products.Find(id);
-                    product.ShortName = input[1];
-                    product.FullName = input[2];
-                    product.Description = input[3];
-                    product.Quantity = int.Parse(input[4]);
-                    pmContext.Products.Attach(product);
-                    pmContext.SaveChanges();
-                }
-        }
-
-        private static void InputMaterial()
-        {
-            Console.WriteLine("Материал. Через пробел: ID, ShotName, FullName, Description. Если Id меньше равен нуля - добавление.");
-            string[] input = Console.ReadLine().Split(" /\\;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            int id = -1;
-            if (int.TryParse(input[0], out int _id))
-                id = _id;
-            if (id < 1)
-                using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
-                {
-                    pmContext.Materials.Add(new MaterialDB() { ShortName = input[1], FullName = input[2], Description = input[3], Timestamp = DateTime.UtcNow });
-                    pmContext.SaveChanges();
-                }
-            else
-                using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
-                {
-                    MaterialDB material = pmContext.Materials.Find(id);
-                    material.ShortName = input[1];
-                    material.FullName = input[2];
-                    material.Description = input[3];
-                    pmContext.Materials.Attach(material);
-                    pmContext.SaveChanges();
-                }
-        }
-
-        private static void InputMaterialInProduct()
-        {
-            Console.WriteLine("Материал. Через пробел: ProductID, MaterialID, Quantity. Если Id меньше равен нуля - добавление.");
+            Console.WriteLine("Добавление Материала в Продукт. Через пробел: ProductID, MaterialID, Quantity.");
             int[] input = Console.ReadLine().Split(" /\\;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse).ToArray();
-            using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
+
+            return MaterialsInProductsRep.AddMaterialInProduct(new MaterialInProductDTO(input[0], input[1], input[2]));
+        }
+        private static IGrouping<ProductDTO, MaterialInProductDTO> AddProductAndMaterials()
+        {
+            Console.WriteLine("Добавление Продукта. Через '\\' или '/': Type, Quantity, Tolerance.");
+            int[] input = Console.ReadLine().Split("/\\;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            ProductDTO product = new ProductDTO(input[0], input[1], input[2]);
+            Console.WriteLine("Добавление Материалов в Продукт. Через пробел: MaterialID, Quantity. Empty - Exit");
+            string inp;
+            Dictionary<int, int> materials = new Dictionary<int, int>();
+            while(!string.IsNullOrWhiteSpace(inp = Console.ReadLine()))
             {
-                pmContext.MaterialsInProducts.Add(new MaterialsInProductsDB() { ProductID = input[0], MaterialID = input[1], Quantity = input[2], Timestamp = DateTime.UtcNow });
-                pmContext.SaveChanges();
+                int[] nums = inp.Split(" /\\;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse).ToArray();
+                materials.Add(nums[0], nums[1]);
             }
+
+            return MaterialsInProductsRep.AddProduct(product, materials);
         }
 
     }

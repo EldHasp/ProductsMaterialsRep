@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{102BA107-5A5C-41AF-9BA4-1E185FA73B6B}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>ProductsMaterialsSQLite</RootNamespace>
     <AssemblyName>ProductsMaterialsSQLite</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -65,8 +65,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\MaterialDTO.cs" />
+    <Compile Include="DTO\MaterialInProductDTO.cs" />
+    <Compile Include="DTO\ProductDTO.cs" />
+    <Compile Include="Interfaces\IMaterials.cs" />
+    <Compile Include="Interfaces\IMaterialsInProducts.cs" />
+    <Compile Include="Interfaces\IProducts.cs" />
     <Compile Include="MaterialDB.cs" />
-    <Compile Include="MaterialsInProductsDB.cs" />
+    <Compile Include="MaterialInProductDB.cs" />
+    <Compile Include="Models\MaterialsInProductsRepData.cs" />
+    <Compile Include="Models\MaterialsRepData.cs" />
+    <Compile Include="Models\ProductsRepData.cs" />
     <Compile Include="ProductDB.cs" />
     <Compile Include="ProductsMaterialsContext.cs" />
     <Compile Include="Program.cs" />

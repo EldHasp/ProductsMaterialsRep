@@ -10,6 +10,11 @@ namespace ProductsMaterialsSQLite
 
         public DbSet<ProductDB> Products { get; set; }
         public DbSet<MaterialDB> Materials { get; set; }
-        public DbSet<MaterialsInProductsDB> MaterialsInProducts { get; set; }
+        public DbSet<MaterialInProductDB> MaterialsInProducts { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductDB>().Property(f => f.Timestamp).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed);
+        }
     }
 }

@@ -6,11 +6,12 @@ namespace ProductsMaterialsSQLite
 {
     /// <summary>Класс для представления вида материала из БД</summary>
     [Table("MaterialsInProducts")]
-    public class MaterialsInProductsDB
+    public class MaterialInProductDB
     {
         /// <summary>Идентификатор продукта</summary>
         /// <remarks>Задаётся обязательно</remarks>
         [Key]
+        [Index]
         [Required]
         [ConcurrencyCheck]
         [ForeignKey("Product")]
@@ -20,6 +21,7 @@ namespace ProductsMaterialsSQLite
         /// <summary>Идентификатор материала</summary>
         /// <remarks>Задаётся обязательно</remarks>
         [Key]
+        [Index]
         [Required]
         [ForeignKey("Material")]
         [Column("MaterialID", Order = 1)]
@@ -31,12 +33,6 @@ namespace ProductsMaterialsSQLite
         [Required]
         public int Quantity { get; set; }
 
-        /// <summary>Время записи</summary>
-        /// <remarks>Задаётся базой при изменении строки</remarks>
-        [Column("Timestamp")]
-        public DateTime? Timestamp { get; set; }
-
-
         /// <summary>Связанный продукт - Свойство навигации</summary>
         [ForeignKey("ProductID")]
         public ProductDB Product { get; set; }
@@ -45,6 +41,6 @@ namespace ProductsMaterialsSQLite
         [ForeignKey("MaterialID")]
         public MaterialDB Material { get; set; }
 
-        public override string ToString() => $"Материал в Продукте: {ProductID}, {Quantity}, \"{Timestamp}\"";
+        public override string ToString() => $"Материал в Продукте: {ProductID}, {Quantity}";
     }
 }
