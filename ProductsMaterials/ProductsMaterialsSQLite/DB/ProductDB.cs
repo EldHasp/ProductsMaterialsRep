@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProductsMaterialsSQLite
+namespace ProductsMaterialsSQLite.DB
 {
     /// <summary>Класс для представления вида продукции из БД</summary>
     [Table("Products")]
@@ -16,6 +16,7 @@ namespace ProductsMaterialsSQLite
 
         /// <summary>Короткое имя</summary>
         /// <remarks>Задаётся обязательно и должно быть уникальным для таблицы</remarks>
+        [Index]
         [Column("Type")]
         public int Type { get; set; }
 
@@ -28,10 +29,11 @@ namespace ProductsMaterialsSQLite
         /// <summary>Допуск</summary>
         /// <remarks>Задавать не обязательно</remarks>
         [Column("Tolerance")]
-        public int? Tolerance { get; set; }
+        public int Tolerance { get; set; }
 
         /// <summary>Время записи</summary>
         /// <remarks>Задаётся базой при изменении строки</remarks>
+        [Index]
         [Column("Timestamp")]
         public DateTime? Timestamp { get; set; }
 

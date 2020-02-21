@@ -1,0 +1,135 @@
+﻿<Window x:Class="DatabaseDownloadEmulatorWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseDownloadEmulatorWPF"
+        xmlns:dto="clr-namespace:ProductsMaterialsSQLite.DTO;assembly=ProductsMaterialsSQLite"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="1200">
+    <d:Window.DataContext>
+        <local:ViewModeEmulator/>
+    </d:Window.DataContext>
+    <Grid x:Name="grid" Background="#FF0096FF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Эмулятор заполнения Базы" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
+                       Foreground="White" FontSize="45"/>
+        <Grid x:Name="grid1" Background="LightBlue" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Background="{Binding Background, ElementName=grid}"
+                  Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Материалы в Продукте" Foreground="White" HorizontalAlignment="Center"
+                           Margin="5" FontSize="30"/>
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Materials}" FontSize="20" Margin="10">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:MaterialVM}">
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Name, Mode=OneWay}" />
+                                <TextBox Grid.Column="1" Text="{Binding Quantity}" HorizontalContentAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Background="{Binding Background, ElementName=grid}"
+                  Grid.Column="1" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Параметры Продукта" Foreground="White" HorizontalAlignment="Center"
+                           Margin="5" FontSize="30" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="textBlock" Grid.Row="1" Text="Тип детали" HorizontalAlignment="Center" FontSize="20"  Margin="5"/>
+                    <TextBlock x:Name="textBlock1" Grid.Row="1" Grid.Column="1" Text="Количество" HorizontalAlignment="Center" FontSize="20"  Margin="5"/>
+                    <TextBox Grid.Row="2" Text="{Binding ProductType}" HorizontalAlignment="Center" FontSize="20"  Margin="5"
+                             Width="{Binding ActualWidth, ElementName=textBlock, Mode=OneWay}" HorizontalContentAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ProductQuantity}" HorizontalAlignment="Center" FontSize="20" 
+                             Margin="5" Width="{Binding ActualWidth, ElementName=textBlock1, Mode=OneWay}" HorizontalContentAlignment="Center"/>
+                </Grid>
+                <Grid Background="{Binding Background, ElementName=grid}" Grid.Row="1"
+                  Grid.Column="1" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Управление циклом" Foreground="White" HorizontalAlignment="Center"
+                           Margin="5" FontSize="30" Grid.ColumnSpan="2"/>
+                    <TextBlock Text="Интервал (сек): " FontSize="20" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5" VerticalAlignment="Center"  FontSize="20"
+                             Text="{Binding Interval}" HorizontalContentAlignment="Center"/>
+                    <Button Grid.Row="2" Content="Старт" Padding="10" FontSize="20" Background="#FF00C800" BorderBrush="Black"
+                            BorderThickness="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Command="{Binding StartCommand, Mode=OneWay}" />
+                    <Button Grid.Row="2" Grid.Column="1" Content="Стоп" Padding="10" FontSize="20" Background="#FFFFC800" BorderBrush="Black"
+                            BorderThickness="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Command="{Binding StopCommand, Mode=OneWay}" />
+                </Grid>
+
+            </Grid>
+            <Grid Background="{Binding Background, ElementName=grid}"
+                  Margin="5" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Добавленные Продукты" Foreground="White" HorizontalAlignment="Center"
+                           Margin="5" FontSize="30"/>
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Products}" FontSize="20">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type dto:ProductDTO}">
+                            <Border BorderThickness="2" BorderBrush="{Binding Background, ElementName=grid1}"
+                                    Margin="5">
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding ID, Mode=OneWay}"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Type, Mode=OneWay}"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Quantity, Mode=OneWay}"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding Tolerance, Mode=OneWay}"/>
+                                    <TextBlock Grid.Column="4" Text="{Binding Timestamp, Mode=OneWay, StringFormat='dd.MM.yy hh:mm:ss'}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Window>

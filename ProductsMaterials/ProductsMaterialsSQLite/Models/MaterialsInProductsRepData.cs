@@ -1,4 +1,5 @@
-﻿using ProductsMaterialsSQLite.DTO;
+﻿using ProductsMaterialsSQLite.DB;
+using ProductsMaterialsSQLite.DTO;
 using ProductsMaterialsSQLite.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -46,31 +47,6 @@ namespace ProductsMaterialsSQLite.Models
             }
         }
 
-        public IGrouping<ProductDTO, MaterialInProductDTO> AddProduct(ProductDTO product, Dictionary<int, int> materials)
-        {
-
-            using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
-            {
-                ProductDB productDB = ProductsRepData.DtoToDb(product);
-                pmContext.Products.Add(productDB);
-                pmContext.SaveChanges();
-
-                List<MaterialInProductDB> list = new List<MaterialInProductDB>();
-                foreach (var mtr in materials)
-                {
-                    var mp = new MaterialInProductDB() { ProductID = productDB.ID, MaterialID = mtr.Key, Quantity = mtr.Value };
-                    list.Add(mp);
-                    pmContext.MaterialsInProducts.Add(mp);
-                }
-                pmContext.SaveChanges();
-
-                ProductDTO productDTO = ProductsRepData.DbToDto(productDB);
-
-                return list.Select(mt => DbToDto(mt)).GroupBy(x => productDTO).First();
-            }
-
-        }
-
         /// <summary>Создание DTO типа по DB типу</summary>
         /// <param name="material">Материал в DB типе</param>
         /// <returns>Новый экземпляр MaterialDTO</returns>
@@ -99,4 +75,6 @@ namespace ProductsMaterialsSQLite.Models
             => db.ProductID == dto.ProductID && db.MaterialID == dto.MaterialID && db.Quantity == dto.Quantity;
 
     }
+
+
 }

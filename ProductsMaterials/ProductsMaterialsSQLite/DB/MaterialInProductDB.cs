@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProductsMaterialsSQLite
+namespace ProductsMaterialsSQLite.DB
 {
     /// <summary>Класс для представления вида материала из БД</summary>
     [Table("MaterialsInProducts")]

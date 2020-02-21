@@ -47,9 +47,10 @@ namespace ProductsMaterialsSQLite
             }
         }
 
-        private static ProductsRepData ProductsrRep = new ProductsRepData();
-        private static MaterialsRepData MaterialsRep = new MaterialsRepData();
-        private static MaterialsInProductsRepData MaterialsInProductsRep = new MaterialsInProductsRepData();
+        private static readonly ProductsRepData ProductsrRep = new ProductsRepData();
+        private static readonly  MaterialsRepData MaterialsRep = new MaterialsRepData();
+        private static readonly  MaterialsInProductsRepData MaterialsInProductsRep = new MaterialsInProductsRepData();
+        private static readonly ComprehensiveRepData ComprehensiveRep= new ComprehensiveRepData();
 
         private static IReadOnlyCollection<ProductDTO> OutputProducts()
         {
@@ -106,7 +107,7 @@ namespace ProductsMaterialsSQLite
                 materials.Add(nums[0], nums[1]);
             }
 
-            return MaterialsInProductsRep.AddProduct(product, materials);
+            return ComprehensiveRep.AddProduct(product, materials);
         }
 
     }

@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductsMaterialsSQLite", "ProductsMaterialsSQLite\ProductsMaterialsSQLite.csproj", "{102BA107-5A5C-41AF-9BA4-1E185FA73B6B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9035BB8E-7EF5-4F55-816D-59356A21FCD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseDownloadEmulatorWPF", "DatabaseDownloadEmulatorWPF\DatabaseDownloadEmulatorWPF.csproj", "{6523CCE5-291C-43C3-A795-018F9DF4690E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{102BA107-5A5C-41AF-9BA4-1E185FA73B6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{102BA107-5A5C-41AF-9BA4-1E185FA73B6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{102BA107-5A5C-41AF-9BA4-1E185FA73B6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9035BB8E-7EF5-4F55-816D-59356A21FCD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9035BB8E-7EF5-4F55-816D-59356A21FCD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9035BB8E-7EF5-4F55-816D-59356A21FCD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9035BB8E-7EF5-4F55-816D-59356A21FCD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6523CCE5-291C-43C3-A795-018F9DF4690E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6523CCE5-291C-43C3-A795-018F9DF4690E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6523CCE5-291C-43C3-A795-018F9DF4690E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6523CCE5-291C-43C3-A795-018F9DF4690E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

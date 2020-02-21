@@ -9,14 +9,14 @@ namespace ProductsMaterialsSQLite.DTO
         /// <remarks>Может задать только Модель</remarks>
         public int? ID { get; }
 
-        /// <summary>Короткое имя</summary>
+        /// <summary>Тип</summary>
         public int Type { get; }
 
         /// <summary>Количество</summary>
         public int Quantity { get; }
 
         /// <summary>Допуск</summary>
-        public int? Tolerance { get; }
+        public int Tolerance { get; }
 
         /// <summary>Время записи</summary>
         /// <remarks>Может задать только Модель</remarks>
@@ -44,7 +44,7 @@ namespace ProductsMaterialsSQLite.DTO
             int? id,
             int type,
             int quantity,
-            int? tolerance,
+            int tolerance,
             DateTime? timestamp)
         {
             if (id != null && id < 1)
@@ -53,7 +53,7 @@ namespace ProductsMaterialsSQLite.DTO
                 throw new ArgumentOutOfRangeException(nameof(type), "Значение должно быть больше нуля");
             if (quantity < 1)
                 throw new ArgumentOutOfRangeException(nameof(quantity), "Значение должно быть больше нуля");
-            if (tolerance != null && tolerance < 0)
+            if (tolerance < 0)
                 throw new ArgumentOutOfRangeException(nameof(tolerance), "Значение не может быть отрицательным");
             if (timestamp != null && (timestamp < new DateTime(2010, 1, 1) || timestamp > new DateTime(2050, 1, 1)))
                 throw new ArgumentOutOfRangeException(nameof(timestamp), "Значение должно быть от 01.01.2010 до 01.01.2050");
@@ -71,7 +71,7 @@ namespace ProductsMaterialsSQLite.DTO
         public ProductDTO(
             int type,
             int quantity,
-            int? tolerance)
+            int tolerance)
             : this(null, type, quantity, tolerance, null) { }
     }
 }

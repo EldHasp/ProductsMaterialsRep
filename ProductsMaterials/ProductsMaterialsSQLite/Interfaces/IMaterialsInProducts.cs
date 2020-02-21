@@ -1,6 +1,5 @@
 ﻿using ProductsMaterialsSQLite.DTO;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ProductsMaterialsSQLite.Interfaces
 {
@@ -25,10 +24,5 @@ namespace ProductsMaterialsSQLite.Interfaces
         /// <summary>Добавляет новую связь Материала с Продуктом</summary>
         /// <param name="materialInProduct">Данные связи</param>
         MaterialInProductDTO AddMaterialInProduct(MaterialInProductDTO materialInProduct);
-
-        /// <summary>Добавляет Продукт с коллекцией связей Материалов</summary>
-        /// <param name="productDTO">Данные Продукта</param>
-        /// <param name="materials">Словарь ID Материалов и их количества</param>
-        IGrouping<ProductDTO, MaterialInProductDTO> AddProduct(ProductDTO product, Dictionary<int, int> materials);
     }
 }

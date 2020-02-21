@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using ProductsMaterialsSQLite.DB;
+using System.Data.Entity;
 
 namespace ProductsMaterialsSQLite
 {
