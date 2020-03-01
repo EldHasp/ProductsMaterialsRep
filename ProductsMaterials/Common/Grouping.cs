@@ -26,14 +26,18 @@ namespace Common
         /// <summary>Конструктор задающий ключ</summary>
         /// <param name="key">Ключ</param>
         public Grouping(Tkey key)
-            => Key = key;
+        {
+            Key = key;
+        }
 
         /// <summary>Конструктор задающий ключ и последовательность элементов</summary>
         /// <param name="key">Ключ</param>
         /// <param name="elements">Последовательность элементов</param>
         public Grouping(Tkey key, IEnumerable<TElement> elements)
             : this(key)
-            => Elements.AddRange(elements);
+        {
+            Elements.AddRange(elements);
+        }
 
         /// <summary>Конструктор задающий ключ и последовательность элементов</summary>
         /// <param name="key">Ключ</param>

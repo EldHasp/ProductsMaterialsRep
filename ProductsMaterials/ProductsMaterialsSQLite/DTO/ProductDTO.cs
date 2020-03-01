@@ -28,7 +28,10 @@ namespace ProductsMaterialsSQLite.DTO
             => ID == other.ID;
 
         public override bool Equals(object obj)
-            => obj is ProductDTO other && Equals(other);
+        {
+            ProductDTO other = obj as ProductDTO;
+            return other != null && Equals(other);
+        }
 
         public override int GetHashCode()
             => ID.GetHashCode();

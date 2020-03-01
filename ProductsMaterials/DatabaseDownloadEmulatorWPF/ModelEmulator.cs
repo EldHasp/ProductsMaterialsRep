@@ -39,8 +39,15 @@ namespace DatabaseDownloadEmulatorWPF
         /// <summary>Интервал таймера</summary>
         public int Interval
         {
-            get => (int)TimerProductData.Interval;
-            set => TimerProductData.Interval = value;
+            get
+            {
+                return (int)TimerProductData.Interval;
+            }
+
+            set
+            {
+                TimerProductData.Interval = value;
+            }
         }
 
         /// <summary>Запуск таймера</summary>
@@ -55,6 +62,7 @@ namespace DatabaseDownloadEmulatorWPF
             Materials = MaterialsRep.GetMaterials();
 
             TimerProductData = new Timer();
+            TimerProductData.Interval = 1000;
             TimerProductData.Elapsed += TimerProductData_Elapsed;
 
         }

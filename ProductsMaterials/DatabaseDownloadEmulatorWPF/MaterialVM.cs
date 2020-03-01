@@ -18,11 +18,25 @@ namespace DatabaseDownloadEmulatorWPF
         public string Name { get; }
 
         /// <summary>Материал выбран</summary>
-        public bool IsSelected { get => _isSelected; set => SetProperty(ref _isSelected, value); }
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                SetProperty(ref _isSelected, value);
+            }
+        }
 
 
         /// <summary>Количество Mатериала</summary>
-        public int Quantity { get => _quantity; set => SetProperty(ref _quantity, value); }
+        public int Quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                SetProperty(ref _quantity, value);
+            }
+        }
 
         /// <summary>Конструктор с заданием неизменяемых свойств</summary>
         /// <param name="id">Идентификатор экземпляра</param>
