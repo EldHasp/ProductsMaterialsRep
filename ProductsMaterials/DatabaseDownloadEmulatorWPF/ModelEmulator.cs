@@ -13,7 +13,7 @@ namespace DatabaseDownloadEmulatorWPF
     {
         /// <summary>Событие запрашивающее данные о Продукте и его материалах</summary>
         public event ProductDataHandler ProductDataEvent;
-        /// <summary>Вспомогательный иетод для вызова события ProductDataEvent</summary>
+        /// <summary>Вспомогательный метод для вызова события ProductDataEvent</summary>
         /// <returns>Группу с ключом Продукт и перечнем его материалов/returns>
         protected IGrouping<ProductDTO, MaterialInProductDTO> OnProductData()
             => ProductDataEvent?.Invoke(this);

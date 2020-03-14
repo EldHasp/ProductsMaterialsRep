@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace ProductsMaterialsSQLite.DTO
 {
@@ -76,5 +77,21 @@ namespace ProductsMaterialsSQLite.DTO
             int quantity,
             int tolerance)
             : this(null, type, quantity, tolerance, null) { }
+
+        /// <summary>Коллекция экземпляров ProductDTO для примера</summary>
+        public static ReadOnlyCollection<ProductDTO> ProductsExample { get; }
+            = Array.AsReadOnly(new ProductDTO[]
+            {
+                new ProductDTO(15, 3, 1000, 150, new DateTime(2020, 1,1)),
+                new ProductDTO(17, 3, 2000, 120, new DateTime(2020, 2,1)),
+                new ProductDTO(12, 3, 3000, 190, new DateTime(2020, 3,1)),
+                new ProductDTO(25, 10, 150, 155, new DateTime(2020, 1,10)),
+                new ProductDTO(27, 10, 2500, 125, new DateTime(2020, 2,10)),
+                new ProductDTO(22, 10, 3500, 195, new DateTime(2020, 3,10)),
+                new ProductDTO(35, 55, 153, 157, new DateTime(2020, 1,20)),
+                new ProductDTO(37, 55, 2503, 127, new DateTime(2020, 2,20)),
+                new ProductDTO(32, 55, 3503, 197, new DateTime(2020, 3,20))
+            });
+
     }
 }

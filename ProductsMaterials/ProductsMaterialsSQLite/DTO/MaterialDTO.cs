@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace ProductsMaterialsSQLite.DTO
 {
@@ -46,6 +47,17 @@ namespace ProductsMaterialsSQLite.DTO
         /// <param name="name">Короткое имя</param>
         public MaterialDTO(string name)
             : this(null, name) { }
+
+        /// <summary>Коллекция экземпляров MaterialDTO для примера</summary>
+        public static ReadOnlyCollection<MaterialDTO> MaterialsExample { get; }
+            = Array.AsReadOnly(new MaterialDTO[]
+            {
+                new MaterialDTO(1, "Вода"),
+                new MaterialDTO(5, "Спирт"),
+                new MaterialDTO(3, "Вино"),
+                new MaterialDTO(2, "Джин"),
+                new MaterialDTO(4, "Ром"),
+            });
     }
 
 }
