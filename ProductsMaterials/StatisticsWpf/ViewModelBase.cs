@@ -3,6 +3,8 @@ using ProductsMaterialsSQLite.DTO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace StatisticsWpf
@@ -18,6 +20,8 @@ namespace StatisticsWpf
         public Dictionary<int, string> Materials { get; }
             = new Dictionary<int, string>();
 
+        private DataTable _productsTable;
+        public DataTable ProductsTable { get => _productsTable; private set => SetProperty(ref _productsTable, value); }
         /// <summary>Экземпляр с данными Времени Разработки</summary>
         public bool IsDesign { get; }
 
@@ -42,12 +46,13 @@ namespace StatisticsWpf
                     foreach (ProductDTO product in type)
                     {
                         List<MaterialInProductDTO> list = materials
-                            .Select(m => new MaterialInProductDTO(product.ID.Value, m.ID.Value, rand.Next(1,(product.Quantity + 400) / materials.Count)))
+                            .Select(m => new MaterialInProductDTO(product.ID.Value, m.ID.Value, rand.Next(1, (product.Quantity + 400) / materials.Count)))
                             .ToList();
                         Products.Add(new Grouping<ProductDTO, MaterialInProductDTO>(product, list));
                     }
                 }
 
+                RenderProductsTable();
             }
         }
 
@@ -74,6 +79,7 @@ namespace StatisticsWpf
         }
 
         private RelayCommand _getProducts;
+
         public RelayCommand GetProducts
         {
             get
@@ -93,6 +99,33 @@ namespace StatisticsWpf
                 || RangeEnd >= RangeBegin;
         }
 
-        protected virtual void GetProductsMethod(object parameter){}
+        protected virtual void GetProductsMethod(object parameter)
+        {
+            RenderProductsTable();
+        }
+
+        protected void RenderProductsTable()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("дата и время записи", typeof(string));
+            table.Columns.Add("Тип изделия", typeof(int));
+
+            foreach (string material in Materials.Values)
+                table.Columns.Add(material,typeof(int));
+
+            foreach (IGrouping<ProductDTO, MaterialInProductDTO> product in Products)
+            {
+                DataRow row = table.NewRow();
+                row["дата и время записи"] = product.Key.Timestamp.Value.ToString(CultureInfo.InstalledUICulture);
+                row["Тип изделия"] = product.Key.Type;
+
+                foreach (MaterialInProductDTO material in product)
+                    row[Materials[material.MaterialID]] = material.Quantity;
+
+                table.Rows.Add(row);
+            }
+
+            ProductsTable = table;
+        }
     }
 }

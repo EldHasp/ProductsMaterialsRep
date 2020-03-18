@@ -1,4 +1,5 @@
 ﻿using ProductsMaterialsSQLite.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,8 @@ namespace StatisticsWpf
         {
 
             Model = model;
+            RangeBegin = DateTime.Now;
+            GetProductsMethod(null);
         }
 
         /// <summary>Конструктор с демонстрационными данными</summary>
@@ -42,6 +45,8 @@ namespace StatisticsWpf
 
             foreach (var product in products)
                 Products.Add(product);
+
+            RenderProductsTable();
         }
 
     }

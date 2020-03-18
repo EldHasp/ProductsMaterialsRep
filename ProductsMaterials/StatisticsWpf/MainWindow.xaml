@@ -58,8 +58,9 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Материалы">
-                <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False" HorizontalAlignment="Center">
-                                        <DataGrid.Columns>
+                <DataGrid ItemsSource="{Binding ProductsTable}" AutoGenerateColumns="True" HorizontalAlignment="Center"
+                          IsReadOnly="True">
+                    <!--<DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Key.Timestamp, Mode=OneWay, StringFormat=\{0:G\}, ConverterCulture=ru-RU}"
                                             Header="дата/время записи" />
                         <DataGridTextColumn Binding="{Binding Key.Type, Mode=OneWay}" Header="Тип изделия"/>
@@ -91,7 +92,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                    </DataGrid.Columns>
+                    </DataGrid.Columns>-->
                 </DataGrid>
             </TabItem>
         </TabControl>
