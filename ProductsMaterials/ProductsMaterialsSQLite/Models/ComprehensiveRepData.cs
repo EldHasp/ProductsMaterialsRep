@@ -57,7 +57,10 @@ namespace ProductsMaterialsSQLite.Models
         {
             using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
             {
-                return Array.AsReadOnly(pmContext.Products.Where(pr => pr.Timestamp >= begin).ToList()
+                return Array.AsReadOnly(pmContext.Products
+                    .OrderBy(pr => pr.Timestamp)
+                    .Where(pr => pr.Timestamp >= begin)
+                    .ToList()
                         .Select(pr => new Grouping<ProductDTO, MaterialInProductDTO>
                           (
                               ProductsRepData.DbToDto(pr),
@@ -75,7 +78,10 @@ namespace ProductsMaterialsSQLite.Models
         {
             using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
             {
-                return Array.AsReadOnly(pmContext.Products.Where(pr => pr.Timestamp >= begin && pr.Timestamp <= end).ToList()
+                return Array.AsReadOnly(pmContext.Products
+                    .OrderBy(pr => pr.Timestamp)
+                    .Where(pr => pr.Timestamp >= begin && pr.Timestamp <= end)
+                    .ToList()
                         .Select(pr => new Grouping<ProductDTO, MaterialInProductDTO>
                           (
                               ProductsRepData.DbToDto(pr),
@@ -94,8 +100,13 @@ namespace ProductsMaterialsSQLite.Models
         {
             using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
             {
-                return Array.AsReadOnly(pmContext.Products.Where(pr => pr.Timestamp >= begin)
-                    .Where(pr => pr.Type == type).ToList()
+                return Array.AsReadOnly(pmContext.Products
+                    .OrderBy(pr => pr.Type)
+                    .ThenBy(pr => pr.Timestamp)
+                    .Where(pr => pr.Type == type)
+                    .Where(pr => pr.Timestamp >= begin)
+                    .Where(pr => pr.Type == type)
+                    .ToList()
                         .Select(pr => new Grouping<ProductDTO, MaterialInProductDTO>
                           (
                               ProductsRepData.DbToDto(pr),
@@ -113,8 +124,12 @@ namespace ProductsMaterialsSQLite.Models
         {
             using (ProductsMaterialsContext pmContext = new ProductsMaterialsContext())
             {
-                return Array.AsReadOnly(pmContext.Products.Where(pr => pr.Timestamp >= begin && pr.Timestamp <= end)
-                    .Where(pr => pr.Type == type).ToList()
+                return Array.AsReadOnly(pmContext.Products
+                    .OrderBy(pr => pr.Type)
+                    .ThenBy(pr => pr.Timestamp)
+                    .Where(pr => pr.Timestamp >= begin && pr.Timestamp <= end)
+                    .Where(pr => pr.Type == type)
+                    .ToList()
                         .Select(pr => new Grouping<ProductDTO, MaterialInProductDTO>
                           (
                               ProductsRepData.DbToDto(pr),

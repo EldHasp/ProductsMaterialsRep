@@ -18,6 +18,7 @@ namespace ProductsMaterialsSQLite.DB
         /// <remarks>Задаётся обязательно и должно быть уникальным для таблицы</remarks>
         [Index]
         [Column("Type")]
+        [Index("OrderByType")]
         public int Type { get; set; }
 
         /// <summary>Количество</summary>
@@ -35,6 +36,7 @@ namespace ProductsMaterialsSQLite.DB
         /// <remarks>Задаётся базой при изменении строки</remarks>
         [Index]
         [Column("Timestamp")]
+        [Index("OrderByTime")]
         public DateTime? Timestamp { get; set; }
 
         public override string ToString() => $"Продукт: {ID}, {Type}, {Quantity}, {Tolerance}, \"{Timestamp}\"";

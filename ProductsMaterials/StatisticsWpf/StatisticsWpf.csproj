@@ -79,8 +79,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DictionaryKeyToValueConverter.cs" />
     <Compile Include="ModelItemDictionary.cs" />
+    <Compile Include="ModelStatistic.cs" />
     <Compile Include="ViewModelBase.cs" />
+    <Compile Include="ViewModelStatistic.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

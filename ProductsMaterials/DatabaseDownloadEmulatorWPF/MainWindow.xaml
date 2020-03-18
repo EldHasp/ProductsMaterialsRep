@@ -105,8 +105,10 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="Добавленные Продукты" Foreground="White" HorizontalAlignment="Center"
                            Margin="5" FontSize="30"/>
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding Products}" FontSize="20">
-                    <ItemsControl.ItemTemplate>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Products}" FontSize="20"
+                           Background="Transparent"
+                            Height="200"   >
+                    <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type dto:ProductDTO}">
                             <Border BorderThickness="2" BorderBrush="{Binding Background, ElementName=grid1}"
                                     Margin="5">
@@ -126,8 +128,8 @@
                                 </Grid>
                             </Border>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
 
         </Grid>
