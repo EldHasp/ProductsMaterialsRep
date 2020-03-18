@@ -21,7 +21,11 @@ namespace StatisticsWpf
             = new Dictionary<int, string>();
 
         private DataTable _productsTable;
-        public DataTable ProductsTable { get => _productsTable; private set => SetProperty(ref _productsTable, value); }
+        public DataTable ProductsTable
+        {
+            get { return _productsTable; }
+            private set { SetProperty(ref _productsTable, value); }
+        }
         /// <summary>Экземпляр с данными Времени Разработки</summary>
         public bool IsDesign { get; }
 
