@@ -17,8 +17,8 @@ namespace DatabaseDownloadEmulatorWPF
 
         public ViewModeEmulator()
             : this(true, null) { }
-        public ViewModeEmulator(bool design , Dispatcher dispatcher)
-            :base (design)
+        public ViewModeEmulator(bool design, Dispatcher dispatcher)
+            : base(design)
         {
             Dispatcher = dispatcher;
 
@@ -53,20 +53,26 @@ namespace DatabaseDownloadEmulatorWPF
         }
 
         private void Model_ProductAddEvent(object sender, ProductDTO product)
-            => Dispatcher?.BeginInvoke(new Action(()=> Products.Insert(0, product)));
+            => Dispatcher?.BeginInvoke(new Action(() => Products.Insert(0, product)));
 
         protected static Random random = new Random();
 
         private IGrouping<ProductDTO, MaterialInProductDTO> Model_ProductDataEvent(object sender)
         {
+            if (ProductQuantity == 0 || ProductType == 0 || Materials.All(mt => mt.IsSelected && mt.Quantity <= 0))
+                return null;
+
             ProductDTO product = new ProductDTO((int)ProductType, (int)ProductQuantity, random.Next(0, 200));
-            List<MaterialInProductDTO> materials = new List<MaterialInProductDTO>();
-            foreach (MaterialVM material in Materials)
-                if (material.IsSelected)
-                {
-                    MaterialInProductDTO mp = new MaterialInProductDTO(1, material.ID, material.Quantity);
-                    materials.Add(mp);
-                }
+            //List<MaterialInProductDTO> materials = new List<MaterialInProductDTO>();
+            //foreach (MaterialVM material in Materials.Where(mt => mt.IsSelected && mt.Quantity > 0))
+            //{
+            //    MaterialInProductDTO mp = new MaterialInProductDTO(1, material.ID, material.Quantity);
+            //    materials.Add(mp);
+            //}
+            List<MaterialInProductDTO> materials = Materials
+                .Where(mt => mt.IsSelected && mt.Quantity > 0)
+                .Select(mt => new MaterialInProductDTO(1, mt.ID, mt.Quantity))
+                .ToList();
 
             Grouping<ProductDTO, MaterialInProductDTO> group = new Grouping<ProductDTO, MaterialInProductDTO>(product, materials);
             return group;

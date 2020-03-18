@@ -57,6 +57,7 @@ namespace DatabaseDownloadEmulatorWPF
         public ObservableCollection<MaterialVM> Materials { get; }
             = new ObservableCollection<MaterialVM>();
 
+        /// <summary>Добавленные Продукты</summary>
         public ObservableCollection<ProductDTO> Products { get; }
             = new ObservableCollection<ProductDTO>();
 

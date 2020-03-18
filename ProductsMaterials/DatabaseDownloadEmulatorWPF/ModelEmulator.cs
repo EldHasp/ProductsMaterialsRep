@@ -53,15 +53,15 @@ namespace DatabaseDownloadEmulatorWPF
         /// <summary>Запуск таймера</summary>
         public void Start()
         {
-            TimerProductData.Start();
             IsWorking = true;
+            TimerProductData.Start();
         }
 
         /// <summary>Остановка таймера</summary>
         public void Stop()
         {
-            TimerProductData.Stop();
             IsWorking = false;
+            TimerProductData.Stop();
         }
 
         /// <summary>Модель работает</summary>
@@ -86,13 +86,14 @@ namespace DatabaseDownloadEmulatorWPF
                 return;
 
             var group = OnProductData();
-            if (group == null || !group.Any())
-                return;
+            if (group != null && group.Any(mt => mt.Quantity > 0) && group.Key.Quantity > 0 && group.Key.Type > 0)
+            {
 
-            var grp = ComprehensiveRep.AddProduct(group.Key, group.ToDictionary(mp => mp.MaterialID, mp => mp.Quantity));
-            OnProductAdd(grp.Key);
+                var grp = ComprehensiveRep.AddProduct(group.Key, group.Where(mt => mt.Quantity > 0).ToDictionary(mp => mp.MaterialID, mp => mp.Quantity));
+                OnProductAdd(grp.Key);
+            }
 
-            if(IsWorking)
+            if (IsWorking)
                 TimerProductData.Start();
         }
     }
