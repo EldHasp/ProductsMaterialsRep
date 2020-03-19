@@ -18,7 +18,7 @@ namespace StatisticsWpf
         {
 
             Model = model;
-            RangeBegin = DateTime.Now;
+            RangeBegin = DateTime.Today;
             GetProductsMethod(null);
         }
 

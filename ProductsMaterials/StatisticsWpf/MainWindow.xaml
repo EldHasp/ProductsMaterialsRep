@@ -70,8 +70,8 @@
         <TabControl Grid.Row="1">
             <TabItem Header="Продукты">
                 <DataGrid
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     AutoGenerateColumns="False"
                     HorizontalGridLinesBrush="Gainsboro"
                     ItemsSource="{Binding Products}"
@@ -86,8 +86,8 @@
             </TabItem>
             <TabItem Header="Материалы">
                 <DataGrid
-                    HorizontalAlignment="left"
-                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     AutoGenerateColumns="True"
                     HorizontalGridLinesBrush="Gainsboro"
                     IsReadOnly="True"
