@@ -77,10 +77,10 @@
                     ItemsSource="{Binding Products}"
                     VerticalGridLinesBrush="Gainsboro">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Key.Timestamp, Mode=OneWay, StringFormat=\{0:G\}, ConverterCulture=ru-RU}" Header="дата/время записи" />
-                        <DataGridTextColumn Binding="{Binding Key.Type, Mode=OneWay}" Header="Тип изделия" />
-                        <DataGridTextColumn Binding="{Binding Key.Quantity, Mode=OneWay}" Header="Количество" />
-                        <DataGridTextColumn Binding="{Binding Key.Tolerance, Mode=OneWay}" Header="Разница к допуску" />
+                        <DataGridTextColumn Binding="{Binding Key.Timestamp, Mode=OneWay, StringFormat=\{0:G\}, ConverterCulture=ru-RU}" Header="дата/время записи" Width="120"/>
+                        <DataGridTextColumn Binding="{Binding Key.Type, Mode=OneWay}" Header="Тип изделия" Width="80"/>
+                        <DataGridTextColumn Binding="{Binding Key.Quantity, Mode=OneWay}" Header="Количество" Width="80"/>
+                        <DataGridTextColumn Binding="{Binding Key.Tolerance, Mode=OneWay}" Header="Разница к допуску" Width="120"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
